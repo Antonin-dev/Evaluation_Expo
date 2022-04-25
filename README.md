@@ -1,5 +1,7 @@
-# Eval expo
-## Antonin VAL
+# Eval expo Antonin VAL
+
+## Stack
+[![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=anuraghazra&layout=compact)](https://github.com/anuraghazra/github-readme-stats)
 
 You need to run :
 
@@ -23,5 +25,4 @@ You can :
 - Redux toolkit.
 - Local storage.
 - Type with typeScript.
-- Send picture.
 - Prettier.

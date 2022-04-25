@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ImageType, StoreImages } from '../../types/type';
 
+/* Setting the initial state of the reducer. */
 const initialState: StoreImages = {
   data: [],
   loading: false,

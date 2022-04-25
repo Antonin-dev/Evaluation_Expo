@@ -9,7 +9,9 @@ import { v4 as uuidv4 } from 'uuid';
 import { useDispatch, useSelector } from 'react-redux';
 import { set_localImages } from './slice/ImagesSlice';
 import { RootState } from '../store/store';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as MediaLibrary from 'expo-media-library';
+import { ImageType } from '../types/type';
 
 export default function MyCamera() {
   const { data: images } = useSelector((state: RootState) => state.images);
@@ -36,15 +38,17 @@ export default function MyCamera() {
       setLocation(coords);
     })();
   }, []);
-
-  //location :  demander la permission et ensuite l'utiliser
-
   if (hasPermission === null) {
     return <View />;
   }
   if (!hasPermission) {
     return <Text>No access to camera</Text>;
   }
+
+  /**
+   * Take a picture with the camera, and then dispatch an action to add the picture to the localImages array
+   * @returns The photo object is being returned.
+   */
   const takePicture = async () => {
     if (!cameraRef) return;
     const photo = await cameraRef.takePictureAsync({ quality: 0.5 });
@@ -58,6 +62,10 @@ export default function MyCamera() {
     );
   };
 
+  /**
+   * If the camera is facing the back, then set the camera to face the front. If the camera is facing the front, then set
+   * the camera to face the back
+   */
   const setFace = () => {
     setType(
       type === Camera.Constants.Type.back
@@ -66,9 +74,21 @@ export default function MyCamera() {
     );
   };
 
-  const savePicture = () => {
-    MediaLibrary.saveToLibraryAsync(images[0].uri);
+  /**
+   * We're using the MediaLibrary API to save the first image in our images array to the user's photo library
+   */
+  const savePicture = async (item: ImageType) => {
+    MediaLibrary.requestPermissionsAsync().then(({ status }) => {
+      if (status === 'granted') {
+        MediaLibrary.saveToLibraryAsync(item.uri).then(() => {
+          alert('Saved to gallery');
+        });
+      } else {
+        alert('No access to gallery');
+      }
+    });
   };
+
   return (
     <View style={styles.container}>
       <Camera

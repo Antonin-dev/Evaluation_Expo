@@ -16,9 +16,18 @@ function MyGallery() {
   const dispatch = useDispatch();
   const { data: images } = useSelector((state: RootState) => state.images);
 
+  /**
+   * It deletes a picture from the store.
+   * @param {string} id - the id of the picture to be deleted
+   */
   const deletePicture = (id: string) => {
     dispatch(deletePictureStore(id));
   };
+
+  /**
+   * The function takes a string as an argument, and then uses the Share API to share the string
+   * @param {string} item - string - The item you want to share.
+   */
   const onShare = async (item: string) => {
     try {
       const result = await Share.share({
@@ -35,6 +44,10 @@ function MyGallery() {
     }
   };
 
+  /**
+   * It takes an object as an argument, and returns a view with an image and two buttons
+   * @param {any}  - item: the item in the array that is being rendered
+   */
   const renderItem = ({ item }: any) => (
     <View style={styles.container}>
       <Image
