@@ -19,6 +19,7 @@ You can :
 - You can previsualize the picture.
 - You can delete a photo.
 - You can share the photo when you click on the icon.
+- you can sace the photo when you click on the icon.
 
 ### Tools
 
